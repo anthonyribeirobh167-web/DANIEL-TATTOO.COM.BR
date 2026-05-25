@@ -1,0 +1,676 @@
+<!DOCTYPE html><html lang="pt-br"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ink Mestre | Tatuador Profissional</title>
+    <!-- Google Fonts: estilo urbano/artístico -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Rubik:ital,wght@0,400;0,600;0,800;1,500&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (ícones via CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #f0f0f0;
+            font-family: 'Inter', 'Rubik', sans-serif;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff, #aaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Rubik', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #eee;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            border-bottom: 1px solid #fff;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-pulse {
+            display: inline-block;
+            background-color: white;
+            color: black;
+            font-weight: 700;
+            padding: 0.9rem 2rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: inherit;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-pulse:hover {
+            animation: pulse 0.8s infinite;
+            background-color: #f0f0f0;
+            transform: scale(1.02);
+        }
+
+        .btn-agendar {
+            display: inline-block;
+            background-color: #25D366;
+            color: white;
+            font-weight: 700;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-family: inherit;
+            text-align: center;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .btn-agendar:hover {
+            background-color: #1da854;
+            transform: scale(1.02);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        section {
+            padding: 5rem 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 6rem;
+        }
+
+        .hero h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff, #b0b0b0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            color: #ccc;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .price-grid, .pack-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .price-card, .pack-card {
+            background: #111;
+            border-radius: 24px;
+            padding: 2rem;
+            flex: 1;
+            min-width: 220px;
+            border: 1px solid #2a2a2a;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        .price-card h3, .pack-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            margin: 1rem 0;
+        }
+
+        .small-text {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            border-left: 4px solid white;
+            padding-left: 1rem;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 20px;
+            background: #1a1a1a;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: block;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+
+        .testimonials {
+            background: #0a0a0a;
+            border-radius: 32px;
+            padding: 2rem;
+        }
+        .testimonial-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        .testimonial-card {
+            background: #111;
+            padding: 1.5rem;
+            border-radius: 24px;
+            max-width: 300px;
+            border: 1px solid #2c2c2c;
+        }
+        .stars {
+            color: #ffc107;
+            margin-bottom: 0.8rem;
+        }
+        .testimonial-card p {
+            font-style: italic;
+            color: #ddd;
+        }
+        .client-name {
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .biosafety {
+            background: linear-gradient(135deg, #0f0f0f, #030303);
+            border-radius: 32px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #333;
+            margin-top: 2rem;
+        }
+        .biosafety i {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 99;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+        .whatsapp-float i {
+            font-size: 1.6rem;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.05);
+            background-color: #20b359;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #222;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 1.2rem;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 70%;
+                height: 100vh;
+                background: #000000e6;
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 3rem;
+                transition: 0.3s;
+                gap: 2rem;
+                border-right: 1px solid #333;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .hero h1 {
+                font-size: 2.6rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            .btn-group {
+                flex-direction: column;
+                align-items: stretch;
+                width: 80%;
+            }
+            section {
+                padding: 3rem 1rem;
+            }
+            .price-card, .pack-card {
+                min-width: 100%;
+            }
+            .whatsapp-float {
+                padding: 10px 16px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s;
+        }
+        .fade-up.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">INK.MESTRE</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <i class="fas fa-bars"></i>
+        </div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#home">Início</a></li>
+            <li><a href="#precos">Preços</a></li>
+            <li><a href="#portfolio-fresh">Recém feitas</a></li>
+            <li><a href="#portfolio-healed">Cicatrizadas</a></li>
+            <li><a href="#pacotes">Pacotes</a></li>
+            <li><a href="#avaliacoes">Avaliações</a></li>
+        </ul>
+    </div>
+</nav>
+
+<a href="#" id="whatsappBtn" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i> Fale conosco
+</a>
+
+<main>
+    <section id="home" class="hero fade-up visible appear">
+        <h1>DANIEL TATTOO</h1>
+        <p>“Arte na pele, identidade eterna”</p>
+        <div class="btn-group">
+            <button class="btn-pulse" data-wa-msg="Olá! Gostaria de fazer um orçamento de tatuagem.">💰 Fazer orçamento</button>
+            <button class="btn-pulse" data-wa-msg="Olá! Gostaria de agendar uma sessão de tatuagem.">📅 Agendar sessão</button>
+            <button class="btn-pulse" data-wa-msg="Olá! Gostaria de fazer um retoque na minha tatuagem.">🔧 Solicitar retoque</button>
+        </div>
+    </section>
+
+    <!-- Seção de preços -->
+    <section id="precos" class="fade-up">
+        <h2 class="section-title">💰 Tabela de Preços</h2>
+        <div class="price-grid">
+            <div class="price-card">
+                <h3>💸 Pequena (simples)</h3>
+                <div class="price">a partir de R$ 80</div>
+                <div class="small-text">5cm - traço básico, sem sombreamento</div>
+            </div>
+            <div class="price-card">
+                <h3>🎨 Pequena (detalhada)</h3>
+                <div class="price">a partir de R$ 100</div>
+                <div class="small-text">5cm - com sombreamento e detalhes</div>
+            </div>
+            <div class="price-card">
+                <h3>⚡ Média</h3>
+                <div class="price">a partir de R$ 600</div>
+                <div class="small-text">detalhamento médio</div>
+            </div>
+        </div>
+        <div class="price-grid" style="margin-top: 1.5rem;">
+            <div class="price-card">
+                <h3>🔥 Grande</h3>
+                <div class="price">a partir de R$ 2.000</div>
+                <div class="small-text">projetos complexos</div>
+            </div>
+            <div class="price-card">
+                <h3>📅 Sessão (diária)</h3>
+                <div class="price">R$ 500 - R$ 1.000</div>
+                <div class="small-text">conforme complexidade</div>
+            </div>
+            <div class="price-card">
+                <h3>🔧 Retoque</h3>
+                <div class="price">a partir de R$ 150</div>
+                <div class="small-text">*aproximadamente 50% do valor da arte</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfólio: Artes recém feitas (7 imagens) -->
+    <section id="portfolio-fresh" class="fade-up">
+        <h2 class="section-title">🖌️ Artes recém feitas</h2>
+        <div class="gallery" id="freshGallery"></div>
+    </section>
+
+    <!-- Portfólio: Artes Cicatrizadas (7 imagens) -->
+    <section id="portfolio-healed" class="fade-up">
+        <h2 class="section-title">✨ Artes Cicatrizadas</h2>
+        <div class="gallery" id="healedGallery"></div>
+        <div class="biosafety" style="margin-top: 2rem;">
+            <i class="fas fa-syringe"></i> <i class="fas fa-hand-sparkles"></i>
+            <h3>Biossegurança & Materiais esterilizados</h3>
+            <p>Todo material é descartável, agulhas estéreis, ambiente hospitalar e rigoroso controle de infecção. Sua segurança é nossa prioridade.</p>
+        </div>
+    </section>
+
+    <!-- Pacotes fechamentos com botões AGENDAR AGORA -->
+    <section id="pacotes" class="fade-up">
+        <h2 class="section-title">📦 Fechamentos Especiais</h2>
+        <div class="pack-grid">
+            <div class="pack-card">
+                <h3>💪 Braço completo</h3>
+                <div class="price">a partir de R$ 1.500</div>
+                <div class="small-text">fechamento total do braço</div>
+                <button class="btn-agendar" data-pacote="Braço completo" data-valor="R$ 1.500">📅 AGENDAR AGORA</button>
+            </div>
+            <div class="pack-card">
+                <h3>🦵 Perna completa</h3>
+                <div class="price">a partir de R$ 2.000</div>
+                <div class="small-text">fechamento total da perna</div>
+                <button class="btn-agendar" data-pacote="Perna completa" data-valor="R$ 2.000">📅 AGENDAR AGORA</button>
+            </div>
+            <div class="pack-card">
+                <h3>🎯 Costas inteiras</h3>
+                <div class="price">a partir de R$ 3.000</div>
+                <div class="small-text">costas completa</div>
+                <button class="btn-agendar" data-pacote="Costas inteiras" data-valor="R$ 3.000">📅 AGENDAR AGORA</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section id="avaliacoes" class="fade-up">
+        <h2 class="section-title">⭐ Clientes que confiam</h2>
+        <div class="testimonials">
+            <div class="testimonial-grid">
+                <div class="testimonial-card"><div class="stars">★★★★★</div><p>"Arte impecável e cicatrização perfeita! Profissional muito cuidadoso, indico demais."</p><div class="client-name">— Mariana S.</div></div>
+                <div class="testimonial-card"><div class="stars">★★★★★</div><p>"Meu fechamento de braço ficou surreal, atendimento top e estúdio 100% esterilizado."</p><div class="client-name">— Rafael L.</div></div>
+                <div class="testimonial-card"><div class="stars">★★★★★</div><p>"O retoque ficou como novo! Melhor tatuador da região, acompanhamento pós-tatuagem excelente."</p><div class="client-name">— Camila R.</div></div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>© 2025 Ink Mestre Studio | Biossegurança certificada | Todos os direitos reservados</p>
+    </footer>
+</main>
+
+<script>
+    // NÚMERO WHATSAPP: 38 9803-4830
+    const WHATSAPP_NUMBER = "553898034830";
+
+    function openWhatsApp(message) {
+        const encodedMsg = encodeURIComponent(message);
+        window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`, '_blank');
+    }
+
+    // Botões principais com data-wa-msg
+    document.querySelectorAll('[data-wa-msg]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const msg = btn.getAttribute('data-wa-msg');
+            if(msg) openWhatsApp(msg);
+        });
+    });
+
+    // Botões de agendamento dos pacotes de fechamento corporal
+    document.querySelectorAll('.btn-agendar').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const pacote = btn.getAttribute('data-pacote');
+            const valor = btn.getAttribute('data-valor');
+            const msg = `Olá! Gostaria de agendar uma sessão para o fechamento de ${pacote} no valor de ${valor}. Estou interessado(a) e gostaria de mais informações sobre disponibilidade de datas, tempo de duração e forma de pagamento. Aguardo seu retorno!`;
+            openWhatsApp(msg);
+        });
+    });
+
+    // Botão flutuante WhatsApp
+    const floatBtn = document.getElementById('whatsappBtn');
+    if(floatBtn) {
+        floatBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openWhatsApp("Olá! Vi o site e gostaria de mais informações sobre tatuagens.");
+        });
+    }
+
+    // ========== SUBSTITUA AQUI PELOS NOMES DAS SUAS IMAGENS ==========
+    // COLOCAR OS ARQUIVOS .jpeg NA MESMA PASTA DO HTML
+    // OU USAR PASTA tipo "imagens/nome_do_arquivo.jpeg"
+    
+    // 7 imagens para artes recém feitas - ALTERE OS NOMES DOS ARQUIVOS
+    const freshTattoos = [
+        "01.jpeg",
+        "02.jpeg",
+        "03.jpeg",
+        "04.jpeg",
+        "05.jpeg",
+        
+    ];
+
+    // 7 imagens para artes cicatrizadas - ALTERE OS NOMES DOS ARQUIVOS
+    const healedTattoos = [
+        "06.jpeg",
+        "07.jpeg",
+        
+    ];
+    // ================================================================
+
+    function renderFreshGallery() {
+        const container = document.getElementById('freshGallery');
+        if(!container) return;
+        container.innerHTML = '';
+        freshTattoos.forEach(url => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = "Tatuagem recém feita";
+            img.loading = "lazy";
+            img.onerror = function() {
+                this.src = 'https://placehold.co/600x600/222/white?text=Imagem+não+encontrada';
+            };
+            div.appendChild(img);
+            container.appendChild(div);
+        });
+    }
+
+    function renderHealedGallery() {
+        const container = document.getElementById('healedGallery');
+        if(!container) return;
+        container.innerHTML = '';
+        healedTattoos.forEach(url => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            const img = document.createElement('img');
+            img.src = url;
+            img.alt = "Tatuagem cicatrizada";
+            img.loading = "lazy";
+            img.onerror = function() {
+                this.src = 'https://placehold.co/600x600/222/white?text=Imagem+não+encontrada';
+            };
+            div.appendChild(img);
+            container.appendChild(div);
+        });
+    }
+
+    const mobileToggle = document.getElementById('mobile-menu');
+    const navLinks = document.getElementById('nav-links');
+    if(mobileToggle) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+
+    const fadeElements = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('appear');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+    fadeElements.forEach(el => observer.observe(el));
+
+    window.addEventListener('load', () => {
+        renderFreshGallery();
+        renderHealedGallery();
+        document.querySelectorAll('section').forEach(sec => {
+            if(sec.getBoundingClientRect().top < window.innerHeight-100) sec.classList.add('visible');
+        });
+    });
+
+    window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if(window.scrollY > 50) {
+            navbar.style.backgroundColor = "rgba(0,0,0,0.98)";
+        } else {
+            navbar.style.backgroundColor = "rgba(0,0,0,0.92)";
+        }
+    });
+</script>
+
+</body></html>
